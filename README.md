@@ -64,7 +64,7 @@ spring.datasource.password=
    Bash
 
    ```
-   git clone <your-repository-url>
+   git clone https://github.com/Shen0302/sb-ecom
    ```
 
 2. **刷新 Maven**： 在 IntelliJ IDEA 中点击 "Reload All Maven Projects" 确保依赖下载完成。
