@@ -72,5 +72,3 @@ spring.datasource.password=
 3. **运行项目**： 运行 `src/main/java/com/ecommerce/project/SbEcomApplication.java`。
 
 ------
-
-## 
