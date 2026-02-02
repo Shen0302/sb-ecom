@@ -24,7 +24,7 @@ public class CategoryController {
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
-    @PostMapping("/api/public/categories")
+    @PostMapping("public/categories")
     //@RequestMapping(value = "public/categories", method = RequestMethod.POST)
     public ResponseEntity<String> createCategory(@RequestBody Category category) {
         categoryService.createCategory(category);
@@ -44,7 +44,7 @@ public class CategoryController {
 
     }
 
-    @PutMapping("/api/public/categories/{categoryId}")
+    @PutMapping("public/categories/{categoryId}")
     public ResponseEntity<String> updateCategory(@RequestBody Category category,
                                                  @PathVariable Long categoryId ) {
         try {
