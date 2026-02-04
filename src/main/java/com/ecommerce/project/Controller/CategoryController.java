@@ -1,6 +1,7 @@
 package com.ecommerce.project.Controller;
 
 import com.ecommerce.project.model.Category;
+import com.ecommerce.project.payload.CategoryDTO;
 import com.ecommerce.project.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,20 +15,24 @@ import java.util.List;
 @RequestMapping("/api")
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
+
+
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("public/categories")
     //@RequestMapping(value = "public/categories", method = RequestMethod.GET)
-    public ResponseEntity<List<Category>> getAllCategories() {
-        List<Category> categories = categoryService.getAllCategories();
+    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
+        List<CategoryDTO> categories = categoryService.getAllCategories();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     @PostMapping("public/categories")
     //@RequestMapping(value = "public/categories", method = RequestMethod.POST)
-    public ResponseEntity<String> createCategory(@RequestBody Category category) {
-        categoryService.createCategory(category);
+    public ResponseEntity<String> createCategory(@RequestBody CategoryDTO categoryDTO) {
+        categoryService.createCategory(categoryDTO);
         return new ResponseEntity<>("Category added successfully", HttpStatus.CREATED);
     }
 
@@ -45,11 +50,13 @@ public class CategoryController {
     }
 
     @PutMapping("public/categories/{categoryId}")
-    public ResponseEntity<String> updateCategory(@RequestBody Category category,
+    public ResponseEntity<String> updateCategory(@RequestBody CategoryDTO categoryDTO,
                                                  @PathVariable Long categoryId ) {
         try {
-            Category savedCategory = categoryService.updateCategory(category, categoryId);
-            return new ResponseEntity<>("Category with category id: " + categoryId, HttpStatus.OK);
+            categoryService.updateCategory(categoryDTO, categoryId);
+
+            return ResponseEntity.status(HttpStatus.OK)
+                                .body("Category updated successfully" + categoryId);
         } catch (ResponseStatusException e) {
             return new ResponseEntity<>(e.getReason(), e.getStatusCode());
         }
